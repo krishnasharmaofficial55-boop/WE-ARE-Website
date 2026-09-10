@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="container hero">
+  <div>
+    <h1>Different places.<br>Similar minds.</h1>
+    <p class="hero-sub">A global community for people who want to connect through interests, ideas, personality, creativity and the things that matter to them.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('auth.register') }}" class="btn btn-gradient">Find Your People</a>
+      <a href="{{ url_for('main.about') }}" class="btn btn-ghost">Explore WE ARE.</a>
+    </div>
+    <p class="hero-emotion">You're not the only one.</p>
+  </div>
+
+  <div class="hero-visual">
+    <svg class="connection-canvas" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abstract illustration of different people connecting from different paths">
+      <defs>
+        <linearGradient id="weareGradientLive" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6C63FF"/>
+          <stop offset="100%" stop-color="#3B82F6"/>
+        </linearGradient>
+      </defs>
+
+      <line class="path" x1="62" y1="88" x2="205" y2="198"/>
+      <line class="path" x1="40" y1="260" x2="205" y2="198"/>
+      <line class="path" x1="150" y1="340" x2="205" y2="198"/>
+      <line class="path active pulse" x1="205" y1="198" x2="318" y2="130"/>
+      <line class="path" x1="318" y1="130" x2="330" y2="250"/>
+      <line class="path" x1="205" y1="198" x2="270" y2="300"/>
+
+      <circle class="node" cx="62" cy="88" r="5"/>
+      <circle class="node" cx="40" cy="260" r="4.5"/>
+      <circle class="node" cx="150" cy="340" r="5.5"/>
+      <circle class="node" cx="270" cy="300" r="4.5"/>
+      <circle class="node" cx="330" cy="250" r="4"/>
+
+      <circle class="node accent pulse" cx="205" cy="198" r="9"/>
+      <circle class="node accent" cx="318" cy="130" r="9"/>
+    </svg>
+  </div>
+</section>
+
+<section class="container section">
+  <h2 class="section-heading">Connect through who you are — not how many people follow you.</h2>
+  <div class="pillar-grid">
+    <div class="pillar">
+      <h3>Discover people like you</h3>
+      <p>Find others who share your interests, your way of thinking, and what you're curious about — wherever they are in the world.</p>
+    </div>
+    <div class="pillar">
+      <h3>Follow or connect</h3>
+      <p>Follow to see someone's world. Connect when you want a real conversation — private messaging opens once it's mutual.</p>
+    </div>
+    <div class="pillar">
+      <h3>Built for real community</h3>
+      <p>A feed shaped by what you care about, not just what's viral. Learning, creativity and genuine exchange come first.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="card" style="padding: 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+    <div>
+      <h2 class="section-heading" style="margin-bottom: 8px;">Ready to find your people?</h2>
+      <p style="color: var(--text-secondary);">It takes a couple of minutes to get started.</p>
+    </div>
+    <a href="{{ url_for('auth.register') }}" class="btn btn-gradient">Find Your People</a>
+  </div>
+</section>
+
+{% endblock %}
