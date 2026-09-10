@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container profile-header">
+  <div class="profile-avatar"></div>
+  <div class="profile-name">{{ profile.display_name if profile.show_real_name else profile.username }}</div>
+  <div class="profile-handle">@{{ profile.username }}</div>
+
+  {% if profile.bio %}
+    <p class="profile-section" style="margin-top: 20px; max-width: 60ch;">{{ profile.bio }}</p>
+  {% endif %}
+
+  {% if profile.who_i_am %}
+    <div class="profile-section">
+      <h3>Who I am</h3>
+      <p>{{ profile.who_i_am }}</p>
+    </div>
+  {% endif %}
+
+  {% if profile.what_im_learning %}
+    <div class="profile-section">
+      <h3>What I'm learning</h3>
+      <p>{{ profile.what_im_learning }}</p>
+    </div>
+  {% endif %}
+
+  {% if profile.what_im_building %}
+    <div class="profile-section">
+      <h3>What I'm building</h3>
+      <p>{{ profile.what_im_building }}</p>
+    </div>
+  {% endif %}
+
+  {% if interests %}
+    <div class="profile-section">
+      <h3>Interests</h3>
+      <div class="tag-list">
+        {% for interest in interests %}
+          <span class="tag">{{ interest.name }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
