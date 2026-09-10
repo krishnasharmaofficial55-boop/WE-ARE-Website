@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="onboarding-shell">
+  <h1>Tell us a little about you</h1>
+  <p style="color: var(--text-secondary); margin-top: 8px;">This is optional and you can change it any time in settings. We use it only to help you find people worth meeting.</p>
+
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    {% for category, items in interest_categories.items() %}
+      <div class="survey-question">
+        <label>{{ "What are you into?" if category == "topic" else "How would you describe yourself?" }}</label>
+        <div class="chip-grid">
+          {% for item in items %}
+            <div class="chip">
+              <input type="checkbox" id="interest-{{ item }}" name="interests" value="{{ item }}">
+              <label for="interest-{{ item }}">{{ item }}</label>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+    {% for key, question in survey_questions %}
+      <div class="survey-question">
+        <label for="{{ key }}">{{ question }}</label>
+        <textarea id="{{ key }}" name="{{ key }}" placeholder="Optional"></textarea>
+      </div>
+    {% endfor %}
+
+    <div style="margin-top: 40px; display: flex; gap: 12px;">
+      <button type="submit" class="btn btn-gradient">Save and continue</button>
+      <button type="submit" name="action" value="skip" class="btn btn-ghost">Skip for now</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

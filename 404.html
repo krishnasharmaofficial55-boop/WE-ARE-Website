@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section" style="text-align: center;">
+  <h1 class="section-heading" style="margin: 0 auto;">Nothing here right now.</h1>
+  <p style="color: var(--text-secondary); margin-top: 10px;">The page you're looking for doesn't exist.</p>
+  <a href="{{ url_for('main.index') }}" class="btn btn-primary" style="margin-top: 24px;">Back home</a>
+</div>
+{% endblock %}

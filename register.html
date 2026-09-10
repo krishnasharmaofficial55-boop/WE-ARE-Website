@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-shell">
+  <div class="card auth-card">
+    <h1>Join WE ARE.</h1>
+    <p class="subtitle">Different places. Similar minds.</p>
+
+    <form method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <div class="field">
+        <label for="display_name">What should we call you?</label>
+        <input type="text" id="display_name" name="display_name" value="{{ form.display_name }}" placeholder="A name or nickname" required>
+        {% if errors.display_name %}<div class="field-error">{{ errors.display_name }}</div>{% endif %}
+        <div class="field-hint">You choose whether this is your real name or a username — it's up to you.</div>
+      </div>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="{{ form.username }}" placeholder="yourname" required>
+        {% if errors.username %}<div class="field-error">{{ errors.username }}</div>{% endif %}
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ form.email }}" required>
+        {% if errors.email %}<div class="field-error">{{ errors.email }}</div>{% endif %}
+      </div>
+
+      <div class="field">
+        <label for="birth_date">Date of birth</label>
+        <input type="date" id="birth_date" name="birth_date" value="{{ form.birth_date }}" required>
+        {% if errors.birth_date %}<div class="field-error">{{ errors.birth_date }}</div>{% endif %}
+        <div class="field-hint">This stays private. It's only used to keep the community age-appropriate.</div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="10">
+        {% if errors.password %}<div class="field-error">{{ errors.password }}</div>{% endif %}
+        <div class="field-hint">At least 10 characters.</div>
+      </div>
+
+      <button type="submit" class="btn btn-gradient btn-block">Create account</button>
+    </form>
+
+    <div class="form-footer">
+      Already on WE ARE.? <a href="{{ url_for('auth.login') }}">Sign in</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
