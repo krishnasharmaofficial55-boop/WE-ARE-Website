@@ -1,0 +1,13 @@
+# Currently used (no network access was available to install anything beyond
+# the Python standard library + these):
+Flask>=3.0
+itsdangerous>=2.1
+Werkzeug>=3.0
+
+# Recommended upgrade path once you have network access — see README.md
+# "Architecture note: no ORM, no Postgres — yet":
+# Flask-SQLAlchemy>=3.1
+# Flask-Login>=0.6
+# Flask-WTF>=1.2
+# psycopg2-binary>=2.9
+# alembic>=1.13
