@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container feed-layout">
+  <div>
+    <div class="feed-tabs">
+      <a href="#" class="active">For You</a>
+      <a href="#">Following</a>
+      <a href="#">Global</a>
+    </div>
+
+    {% if posts %}
+      {% for post in posts %}
+        <div class="card post">
+          <div class="post-head">
+            <div class="post-avatar"></div>
+            <div>
+              <div class="post-name">{{ post.display_name }}</div>
+              <div class="post-meta">@{{ post.username }} · {{ post.created_at }}</div>
+            </div>
+          </div>
+          <div class="post-body">{{ post.body }}</div>
+          <div class="post-actions">
+            <span>Like</span><span>Comment</span><span>Repost</span><span>Share</span><span>Save</span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state card">
+        <h3>Nothing here right now.</h3>
+        <p>Give it a little time — or go find your people on Discover.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div>
+    <div class="card" style="padding: 24px;">
+      <h3 style="font-size: 0.95rem; margin-bottom: 12px;">You're not the only one.</h3>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">Head to Discover to find people who think like you.</p>
+      <a href="{{ url_for('main.discover') }}" class="btn btn-ghost btn-block" style="margin-top: 16px;">Discover people</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
