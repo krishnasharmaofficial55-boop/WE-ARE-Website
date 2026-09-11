@@ -489,6 +489,106 @@ p { margin: 0; }
 .profile-name { font-size: 1.5rem; margin-top: 16px; }
 .profile-handle { color: var(--text-muted); font-size: 0.95rem; }
 
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.profile-actions form { display: inline; }
+
+/* ==========================================================================
+   Connections
+   ========================================================================== */
+
+.connections-section { margin-top: 40px; }
+.connections-section h2 { font-size: 1.15rem; margin-bottom: 16px; }
+
+.request-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+
+.request-name { font-weight: 600; }
+.request-meta { color: var(--text-muted); font-size: 0.85rem; }
+.request-actions { display: flex; gap: 8px; }
+.request-actions form { display: inline; }
+
+.connection-list { display: flex; flex-direction: column; gap: 10px; }
+
+/* ==========================================================================
+   Messaging
+   ========================================================================== */
+
+.inbox-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  margin-bottom: 8px;
+}
+
+.thread-shell {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 32px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 72px);
+}
+
+.thread-header { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+
+.thread-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bubble {
+  max-width: 70%;
+  padding: 10px 16px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+}
+
+.bubble.mine {
+  align-self: flex-end;
+  background: var(--gradient);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble.theirs {
+  align-self: flex-start;
+  background: var(--surface-soft);
+  border-bottom-left-radius: 4px;
+}
+
+.thread-compose {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.thread-compose input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: var(--surface);
+  color: var(--text);
+}
+
 .profile-section { margin-top: 28px; }
 .profile-section h3 { font-size: 0.85rem; text-transform: none; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
 .profile-section p { font-size: 1rem; }

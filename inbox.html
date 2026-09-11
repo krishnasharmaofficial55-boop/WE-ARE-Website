@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section">
+  <h1 class="section-heading" style="font-size: 2rem;">Messages</h1>
+
+  {% if conversations %}
+    <div style="margin-top: 24px;">
+      {% for c in conversations %}
+        <a href="{{ url_for('messaging.thread', username=c.username) }}" class="card inbox-row" style="display: flex;">
+          <div class="post-avatar"></div>
+          <div>
+            <div class="request-name">{{ c.display_name }}</div>
+            {% if not c.last_at %}<div class="request-meta">Say hello</div>{% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state card" style="margin-top: 24px;">
+      <h3>No conversations yet.</h3>
+      <p>Messaging opens up once a connection is accepted — head to Discover or Connections.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

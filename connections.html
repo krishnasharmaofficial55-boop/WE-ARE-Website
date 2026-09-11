@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section">
+  <h1 class="section-heading" style="font-size: 2rem;">Connections</h1>
+
+  <div class="connections-section">
+    <h2>Requests</h2>
+    {% if incoming %}
+      {% for req in incoming %}
+        <div class="card request-row">
+          <div>
+            <div class="request-name">{{ req.display_name if req.show_real_name else req.username }}</div>
+            <div class="request-meta">wants to connect</div>
+          </div>
+          <div class="request-actions">
+            <form method="post" action="{{ url_for('social.accept_connection_request', request_id=req.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+              <button type="submit" class="btn btn-gradient">Accept</button>
+            </form>
+            <form method="post" action="{{ url_for('social.decline_connection_request', request_id=req.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+              <button type="submit" class="btn btn-ghost">Decline</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">No pending requests right now.</p>
+    {% endif %}
+  </div>
+
+  {% if outgoing %}
+    <div class="connections-section">
+      <h2>Sent</h2>
+      {% for req in outgoing %}
+        <div class="card request-row">
+          <div>
+            <div class="request-name">{{ req.display_name if req.show_real_name else req.username }}</div>
+            <div class="request-meta">waiting for a response</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="connections-section">
+    <h2>Your connections</h2>
+    {% if connected %}
+      <div class="connection-list">
+        {% for c in connected %}
+          <div class="card request-row">
+            <div class="request-name">{{ c.display_name if c.show_real_name else c.username }}</div>
+            <a href="{{ url_for('messaging.thread', username=c.username) }}" class="btn btn-ghost">Message</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state card">
+        <h3>No connections yet.</h3>
+        <p>Head to Discover to find people worth connecting with.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

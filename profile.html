@@ -5,6 +5,53 @@
   <div class="profile-name">{{ profile.display_name if profile.show_real_name else profile.username }}</div>
   <div class="profile-handle">@{{ profile.username }}</div>
 
+  {% if relationship %}
+    <div class="profile-actions">
+      {% if relationship.connected %}
+        <a href="{{ url_for('messaging.thread', username=profile.username) }}" class="btn btn-gradient">Message</a>
+        <form method="post" action="{{ url_for('social.remove_connection', username=profile.username) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-ghost">Remove connection</button>
+        </form>
+      {% elif relationship.pending_incoming_id %}
+        <form method="post" action="{{ url_for('social.accept_connection_request', request_id=relationship.pending_incoming_id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-gradient">Accept connection request</button>
+        </form>
+      {% elif relationship.pending_outgoing %}
+        <button class="btn btn-ghost" disabled>Request sent</button>
+      {% else %}
+        <form method="post" action="{{ url_for('social.send_connection_request', username=profile.username) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-gradient">Connect</button>
+        </form>
+      {% endif %}
+
+      {% if relationship.following %}
+        <form method="post" action="{{ url_for('social.unfollow', username=profile.username) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-ghost">Following</button>
+        </form>
+      {% else %}
+        <form method="post" action="{{ url_for('social.follow', username=profile.username) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit" class="btn btn-ghost">Follow</button>
+        </form>
+      {% endif %}
+    </div>
+
+    {% if relationship.shared_interests %}
+      <div class="profile-section">
+        <h3>Common ground</h3>
+        <div class="tag-list">
+          {% for name in relationship.shared_interests %}
+            <span class="tag">{{ name }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+
   {% if profile.bio %}
     <p class="profile-section" style="margin-top: 20px; max-width: 60ch;">{{ profile.bio }}</p>
   {% endif %}

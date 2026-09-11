@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section" style="text-align: center;">
+  <h1 class="section-heading" style="margin: 0 auto;">Not connected yet.</h1>
+  <p style="color: var(--text-secondary); margin-top: 10px;">
+    Messaging with {{ other.display_name if other.show_real_name else other.username }} opens up once you're connected.
+  </p>
+  <a href="{{ url_for('main.profile', username=other.username) }}" class="btn btn-gradient" style="margin-top: 24px;">View profile</a>
+</div>
+{% endblock %}

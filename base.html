@@ -26,6 +26,8 @@
       <div class="nav-actions">
         {% if current_user %}
           <a href="{{ url_for('main.feed') }}" class="btn btn-ghost">Feed</a>
+          <a href="{{ url_for('social.connections') }}" class="btn btn-ghost">Connections</a>
+          <a href="{{ url_for('messaging.inbox') }}" class="btn btn-ghost">Messages</a>
           <a href="{{ url_for('main.profile', username=current_user['username']) }}" class="btn btn-primary">Profile</a>
           <form method="post" action="{{ url_for('auth.logout') }}" style="display:inline;">
             <input type="hidden" name="csrf_token" value="{{ nav_csrf_token }}">

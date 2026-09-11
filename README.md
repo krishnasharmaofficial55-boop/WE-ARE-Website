@@ -34,6 +34,18 @@ export SECRET_KEY=$(python3 -c "import secrets; print(secrets.token_hex(32))")
 - **Onboarding survey**: optional, skippable, stores interests and free-text
   answers. No personality scoring — just self-described signals, per the
   brief.
+- **Follow / Connect**: one-way follow, and a full two-way connection flow —
+  send request → recipient accepts or declines → connection created →
+  private messaging unlocks. Sending a request to someone who already sent
+  you one auto-accepts instead of creating a duplicate. Connections page
+  shows incoming/outgoing requests and current connections. Profile page
+  shows the right action (Connect / Request sent / Accept / Message /
+  Remove connection) based on relationship state, plus "Common ground" —
+  shared interests instead of a compatibility score, per the brief.
+- **Messaging (gated, not yet encrypted)**: a message thread only renders
+  once `are_connected()` is true — otherwise you get a locked screen, no
+  content leak. The message storage itself is plaintext for now; see
+  the warning at the top of `app/messaging.py` and item 4 below.
 - **Feed / Discover / Profile**: real routes and templates, wired to the
   database, with honest empty states instead of a placeholder page.
 - **Database schema** (`app/schema.sql`): every core model from the brief —
@@ -68,19 +80,24 @@ milestones, roughly in the order they unlock each other:
 1. **Posts & the real feed** — creating posts (text/image/video/poll),
    likes/comments/reposts/saves, and the For You / Following / Global
    ranking logic.
-2. **Follow & Connect** — the request → accept → connection flow, and using
-   it to gate private messaging.
-3. **Discover** — interest/goal/character-based matching, "common ground"
-   surfacing instead of a compatibility score.
-4. **Messaging with real E2EE** — this needs a proper audited protocol
-   (e.g. the Signal protocol via `libsignal`), not something to hand-roll.
-   Worth scoping as its own project once the rest of the graph exists.
+2. ~~**Follow & Connect**~~ — done: request → accept → connection flow,
+   gating private messaging (see `app/social.py`, `app/messaging.py`).
+3. **Discover** — interest/goal/character-based matching, surfacing
+   people to follow/connect with (the "common ground" display on profiles
+   is already built — Discover needs to surface candidates to view).
+4. **Messaging with real E2EE** — the gate exists and works
+   (`are_connected()` in `app/social.py`); the message content itself is
+   still plaintext. This needs a proper audited protocol (e.g. the Signal
+   protocol via `libsignal`), not something to hand-roll. Worth scoping as
+   its own project.
 5. **Moderation & admin dashboard** — report queue, content actions,
    suspensions/appeals, audit log viewer, platform stats.
 6. **File uploads** — avatar/media storage (S3-compatible), image
    processing, size/type validation (config ceilings are already set in
    `app/config.py`).
-7. **Notifications** — in-app + eventually push, deduplicated/grouped.
+7. **Notifications** — the `notifications` table is already being written
+   to (connection requests/accepts, messages); still needs a UI to read
+   from it, plus eventually push, deduplicated/grouped.
 8. **Production deploy**: PostgreSQL, a real mail provider for
    verification/reset emails (currently just logged), Gunicorn/WSGI,
    HTTPS, rate limiting (e.g. Flask-Limiter), and a CSP header.

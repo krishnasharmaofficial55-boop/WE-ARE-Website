@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="thread-shell">
+  <div class="thread-header">
+    <a href="{{ url_for('messaging.inbox') }}" style="color: var(--text-muted); font-size: 0.85rem;">&larr; Messages</a>
+    <h2 style="margin-top: 6px;">{{ other.display_name if other.show_real_name else other.username }}</h2>
+  </div>
+
+  <div class="thread-messages">
+    {% if not messages %}
+      <div class="empty-state">
+        <h3>Say hello.</h3>
+        <p>You're connected — this is the start of your conversation.</p>
+      </div>
+    {% endif %}
+    {% for m in messages %}
+      <div class="bubble {{ 'mine' if m.sender_id == user.id else 'theirs' }}">{{ m.body }}</div>
+    {% endfor %}
+  </div>
+
+  <form method="post" class="thread-compose">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input type="text" name="body" placeholder="Write a message..." autocomplete="off" required autofocus>
+    <button type="submit" class="btn btn-gradient">Send</button>
+  </form>
+</div>
+{% endblock %}
