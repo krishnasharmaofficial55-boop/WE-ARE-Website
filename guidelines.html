@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section legal-page">
+  <h1 class="section-heading" style="font-size: 2.2rem;">Community Guidelines</h1>
+  <p class="legal-intro">WE ARE. exists so people who feel different can find others who understand them. That only works if the community feels genuinely safe — these guidelines describe what we expect from everyone here, and what happens if they're not followed.</p>
+
+  <h2>The spirit of it</h2>
+  <p>Connect through who you are and what you care about. Disagree honestly, but treat people with respect. Assume good faith. If a conversation stops feeling like that, it's fine to walk away from it — you're never obligated to keep engaging with someone.</p>
+
+  <h2>Never allowed, no exceptions</h2>
+  <ul>
+    <li>Sexual content involving minors, sexual solicitation, grooming, or any sexual exploitation of a minor.</li>
+    <li>Sexual harassment, threats, or coercion directed at anyone.</li>
+    <li>Explicit sexual content or inappropriate sexual communication directed at a minor.</li>
+    <li>Harassment, targeted abuse, or credible threats of violence.</li>
+    <li>Hate speech or content that attacks people based on who they are.</li>
+    <li>Impersonating another person, or creating a fake account to deceive people.</li>
+    <li>Spam, scams, or coordinated inauthentic behavior.</li>
+  </ul>
+
+  <h2>Age and safety</h2>
+  <p>WE ARE. includes both teenagers and adults, and the platform is built to keep those groups appropriately separated by default — see our <a href="{{ url_for('main.privacy') }}">Privacy Policy</a> for how age is handled. Adult-only content is never shown to a minor. If you believe a minor is being targeted or endangered anywhere on the platform, report it immediately or reach us directly through <a href="{{ url_for('main.contact') }}">Contact</a> — reports involving a minor's safety are treated as our highest priority.</p>
+
+  <h2>Reporting and moderation</h2>
+  <p>Every post, comment, and profile can be reported. Reports go to a human moderator, who can warn a user, remove content, or suspend or ban an account, depending on severity. We keep an internal log of every moderation action taken. If you think a decision about your account was wrong, you can appeal it by reaching out through our <a href="{{ url_for('main.contact') }}">Contact</a> page.</p>
+  <p>Because private messages are intended to be end-to-end encrypted once that work is complete, moderators can't see message content by default. If something in a private conversation needs to be reported, you can voluntarily submit it as evidence when you file the report.</p>
+
+  <h2>Follow, Connect, and Block</h2>
+  <p>Following someone doesn't obligate them to follow back, and connecting requires mutual acceptance — nobody can message you privately until you've accepted a connection. You can block anyone at any time, for any reason, with no explanation owed.</p>
+
+  <h2>Changes</h2>
+  <p>We may update these guidelines as the community grows. Meaningful changes will be announced, not made silently.</p>
+</div>
+{% endblock %}

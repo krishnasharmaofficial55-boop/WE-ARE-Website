@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section" style="max-width: 720px;">
+  <a href="{{ url_for('admin.reports') }}" style="color: var(--text-muted); font-size: 0.85rem;">&larr; Reports</a>
+  <h1 class="section-heading" style="font-size: 1.6rem; margin-top: 10px;">Report #{{ report.id }}</h1>
+
+  <div class="card" style="padding: 24px; margin-top: 20px;">
+    <div class="request-meta">Reported by @{{ report.reporter_username }} · {{ report.created_at }}</div>
+    <p style="margin-top: 10px;"><strong>Reason:</strong> {{ report.reason }}</p>
+    {% if report.details %}<p style="margin-top: 6px;">{{ report.details }}</p>{% endif %}
+    {% if report.evidence_url %}<p style="margin-top: 6px;"><strong>Evidence:</strong> {{ report.evidence_url }}</p>{% endif %}
+    <div class="tag" style="margin-top: 12px; display: inline-block;">{{ report.status }}</div>
+  </div>
+
+  {% if subject %}
+    <div class="card" style="padding: 24px; margin-top: 16px;">
+      <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">
+        Reported {{ report.subject_type }}
+      </h3>
+      {% if report.subject_type == "post" %}
+        <div class="post-meta">@{{ subject.username }}</div>
+        <p style="margin-top: 6px;">{{ subject.body }}</p>
+      {% else %}
+        <div class="post-meta">@{{ subject.username }} — {{ 'active' if subject.is_active else 'suspended' }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if report.status in ("open", "reviewing") %}
+    <div class="card" style="padding: 24px; margin-top: 16px;">
+      <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Take action</h3>
+      <form method="post" action="{{ url_for('admin.take_action', report_id=report.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <div class="field">
+          <label for="action_type">Action</label>
+          <select name="action_type" id="action_type" style="width:100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+            <option value="dismiss">Dismiss report</option>
+            <option value="warn">Warn user</option>
+            {% if report.subject_type == "post" %}<option value="remove_content">Remove content</option>{% endif %}
+            <option value="suspend">Suspend account</option>
+            <option value="ban">Ban account</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="notes">Notes (internal)</label>
+          <textarea name="notes" id="notes" style="width:100%; min-height:60px; padding:10px; border-radius:10px; border:1px solid var(--border); font-family:inherit;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gradient">Submit action</button>
+      </form>
+    </div>
+  {% endif %}
+
+  {% if history %}
+    <div class="card" style="padding: 24px; margin-top: 16px;">
+      <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">History</h3>
+      {% for h in history %}
+        <div class="request-meta" style="margin-bottom: 6px;">{{ h.action_type }} — {{ h.created_at }}{% if h.notes %} — {{ h.notes }}{% endif %}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

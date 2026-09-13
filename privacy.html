@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section legal-page">
+  <h1 class="section-heading" style="font-size: 2.2rem;">Privacy Policy</h1>
+  <p class="legal-intro">This describes what we collect, why, and what we do — and don't do — with it. It's written in plain language on purpose. It isn't a substitute for legal advice about your specific situation.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Account info</strong>: email, username, a display name, and a password (stored as a one-way hash — we never store or can see your actual password).</li>
+    <li><strong>Date of birth</strong>: collected privately at signup to keep the community age-appropriate. It is never shown on your profile or to other users — only a derived "is this account a minor" flag is used internally, for things like age-aware Discover filtering.</li>
+    <li><strong>Profile content</strong>: anything you choose to add — bio, interests, what you're learning or building, and so on.</li>
+    <li><strong>Content you create</strong>: posts, comments, likes, reposts, saves, and messages.</li>
+    <li><strong>Onboarding survey answers</strong>: entirely optional and skippable, used only to improve who we show you in Discover and your feed.</li>
+    <li><strong>Uploaded images</strong>: avatars and post images. We strip metadata (like GPS location data that cameras sometimes embed in photos) from every image when it's uploaded.</li>
+    <li><strong>Basic technical data</strong>: things like your session, IP address at time of request, and browser user-agent, used for security (e.g. detecting suspicious login activity) and keeping the service running.</li>
+  </ul>
+
+  <h2>What we don't do</h2>
+  <ul>
+    <li>We don't sell your data to third parties.</li>
+    <li>We don't show your exact date of birth or exact address to anyone.</li>
+    <li>We don't let advertisers target you based on sensitive categories, and ads (once introduced) will never appear inside private conversations.</li>
+    <li>We don't give moderators or administrators standing access to your private messages — see the note on messaging below for the one honest exception to that right now.</li>
+  </ul>
+
+  <h2>A direct note about private messaging</h2>
+  <p>Our goal is for private messages to be end-to-end encrypted, meaning not even we could read them. <strong>That work isn't finished yet.</strong> Right now, private messages are stored in a way our systems can technically access, the same as any other content on the platform. We're telling you this plainly rather than letting you assume otherwise — we won't claim messaging is encrypted until it actually is, and we'll update this page the moment that changes.</p>
+
+  <h2>Who can see what</h2>
+  <p>Your posts are public by default unless you mark them for connections only. Your profile shows only what you choose to fill in, plus whether you've opted to show your real display name. Following someone lets them see your public content; connecting (which requires mutual acceptance) is what's required for private messaging.</p>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li>You can edit or remove most profile information at any time from Settings.</li>
+    <li>You can choose whether your real display name or just your username is shown publicly.</li>
+    <li>You can block another account, which removes mutual visibility between you.</li>
+    <li>You can request account deletion by contacting us — see the <a href="{{ url_for('main.contact') }}">Contact</a> page.</li>
+  </ul>
+
+  <h2>Data retention</h2>
+  <p>We keep your data for as long as your account is active. If you delete your account, we remove your personal content within a reasonable period, except where we're required to retain limited records (for example, moderation logs related to safety actions).</p>
+
+  <h2>Security</h2>
+  <p>Passwords are hashed, never stored in plain text. Sessions are revocable server-side, not just a token that lives forever. All state-changing actions require a fresh security check (CSRF protection). We can't promise perfect security — no one honestly can — but we design for it deliberately rather than as an afterthought.</p>
+
+  <h2>Children and teenagers</h2>
+  <p>We ask for a birth date at signup specifically to prevent anyone under our minimum age from joining, and to keep minors and adults from being shown to each other in Discover and matching. If you believe a minor has misrepresented their age to join or is being targeted by an adult, please contact us immediately.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If we make a material change to how we handle your data, we'll make a reasonable effort to let you know before it takes effect, not bury it in a silent update.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or your data — reach out through our <a href="{{ url_for('main.contact') }}">Contact</a> page.</p>
+</div>
+{% endblock %}

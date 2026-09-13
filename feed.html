@@ -2,32 +2,40 @@
 {% block content %}
 <div class="container feed-layout">
   <div>
+    <div class="card" style="padding: 20px; margin-bottom: 20px;">
+      <form method="post" action="{{ url_for('posts.create') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <textarea name="body" class="composer" placeholder="What's on your mind?" maxlength="2000"></textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+          <label class="composer-attach">
+            <input type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;" onchange="this.form.querySelector('.composer-filename').textContent = this.files[0] ? this.files[0].name : '';">
+            📷 Add image
+          </label>
+          <span class="composer-filename" style="font-size: 0.85rem; color: var(--text-muted);"></span>
+          <button type="submit" class="btn btn-gradient">Post</button>
+        </div>
+      </form>
+    </div>
+
     <div class="feed-tabs">
-      <a href="#" class="active">For You</a>
-      <a href="#">Following</a>
-      <a href="#">Global</a>
+      <a href="{{ url_for('main.feed', tab='for_you') }}" class="{{ 'active' if tab == 'for_you' }}">For You</a>
+      <a href="{{ url_for('main.feed', tab='following') }}" class="{{ 'active' if tab == 'following' }}">Following</a>
+      <a href="{{ url_for('main.feed', tab='global') }}" class="{{ 'active' if tab == 'global' }}">Global</a>
     </div>
 
     {% if posts %}
       {% for post in posts %}
-        <div class="card post">
-          <div class="post-head">
-            <div class="post-avatar"></div>
-            <div>
-              <div class="post-name">{{ post.display_name }}</div>
-              <div class="post-meta">@{{ post.username }} · {{ post.created_at }}</div>
-            </div>
-          </div>
-          <div class="post-body">{{ post.body }}</div>
-          <div class="post-actions">
-            <span>Like</span><span>Comment</span><span>Repost</span><span>Share</span><span>Save</span>
-          </div>
-        </div>
+        {% include "_post.html" %}
       {% endfor %}
     {% else %}
       <div class="empty-state card">
-        <h3>Nothing here right now.</h3>
-        <p>Give it a little time — or go find your people on Discover.</p>
+        {% if tab == 'following' %}
+          <h3>You haven't found your people yet.</h3>
+          <p>Follow or connect with someone to see their posts here.</p>
+        {% else %}
+          <h3>Nothing here right now.</h3>
+          <p>Give it a little time — or go find your people on Discover.</p>
+        {% endif %}
       </div>
     {% endif %}
   </div>

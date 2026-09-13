@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section" style="max-width: 640px;">
+  <h1 class="section-heading" style="font-size: 1.8rem;">Notifications</h1>
+
+  {% if items %}
+    <div style="margin-top: 20px;">
+      {% for n in items %}
+        <a href="{{ n.link }}" class="card notif-row {{ 'unread' if not n.is_read }}">
+          <div class="post-avatar" style="width:36px;height:36px;"></div>
+          <div>
+            <div class="notif-text">
+              {% if n.actor_name %}<strong>{{ n.actor_name }}</strong>{% endif %} {{ n.label }}
+            </div>
+            <div class="request-meta">{{ n.created_at }}</div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state card" style="margin-top: 24px;">
+      <h3>Nothing here right now.</h3>
+      <p>You'll see connection requests, likes, comments and messages here.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

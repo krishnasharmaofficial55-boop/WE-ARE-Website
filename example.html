@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WE ARE. — Messages</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 16px; }
+    #messages { min-height: 300px; border: 1px solid #ddd; padding: 16px; border-radius: 12px; }
+    .message { margin: 8px 0; padding: 10px 12px; background: #f3f3f3; border-radius: 10px; }
+    form { display: flex; gap: 8px; margin-top: 12px; }
+    input { flex: 1; padding: 12px; }
+    button { padding: 12px 18px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>WE ARE. Messages</h1>
+  <div id="status">Checking login…</div>
+  <div id="messages"></div>
+
+  <form id="message-form">
+    <input id="message-input" maxlength="4000" placeholder="Write a message…" autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+
+  <script type="module">
+    import {
+      getCurrentUser,
+      loadMessages,
+      sendMessage,
+      subscribeToMessages
+    } from "./messaging.js";
+
+    // Replace this with a real conversation ID after creating a conversation.
+    const conversationId = new URLSearchParams(location.search).get("conversation");
+
+    const status = document.querySelector("#status");
+    const box = document.querySelector("#messages");
+    const form = document.querySelector("#message-form");
+    const input = document.querySelector("#message-input");
+
+    function render(message) {
+      const item = document.createElement("div");
+      item.className = "message";
+      item.textContent = message.body; // textContent prevents HTML injection
+      box.appendChild(item);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    try {
+      const user = await getCurrentUser();
+      if (!user) throw new Error("Please sign in first.");
+      if (!conversationId) throw new Error("Add ?conversation=CONVERSATION_ID to the URL.");
+
+      status.textContent = `Signed in as ${user.email}`;
+
+      const messages = await loadMessages(conversationId);
+      messages.forEach(render);
+
+      await subscribeToMessages(conversationId, render);
+
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        const body = input.value.trim();
+        if (!body) return;
+        input.value = "";
+        try {
+          await sendMessage(conversationId, body);
+        } catch (error) {
+          console.error(error);
+          alert("Message could not be sent.");
+        }
+      });
+    } catch (error) {
+      status.textContent = error.message;
+    }
+  </script>
+</body>
+</html>

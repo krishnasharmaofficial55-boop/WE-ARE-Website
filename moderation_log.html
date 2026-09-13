@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section">
+  <h1 class="section-heading" style="font-size: 1.8rem;">Moderation log</h1>
+  {% include "admin/_nav.html" %}
+
+  <div style="margin-top: 20px;">
+    {% for a in actions %}
+      <div class="card request-row">
+        <div>
+          <div class="request-name">{{ a.action_type }}{% if a.target_username %} — @{{ a.target_username }}{% endif %}</div>
+          <div class="request-meta">by @{{ a.admin_username }} · {{ a.created_at }}{% if a.notes %} · {{ a.notes }}{% endif %}</div>
+        </div>
+      </div>
+    {% else %}
+      <p style="color: var(--text-secondary);">No moderation actions yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

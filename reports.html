@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section">
+  <h1 class="section-heading" style="font-size: 1.8rem;">Reports</h1>
+  {% include "admin/_nav.html" %}
+
+  <div class="admin-filter-tabs">
+    {% for s in ["open", "reviewing", "resolved", "dismissed", "all"] %}
+      <a href="{{ url_for('admin.reports', status=s) }}" class="{{ 'active' if status_filter == s }}">{{ s|capitalize }}</a>
+    {% endfor %}
+  </div>
+
+  {% if reports %}
+    <div style="margin-top: 20px;">
+      {% for r in reports %}
+        <a href="{{ url_for('admin.report_detail', report_id=r.id) }}" class="card request-row" style="display:flex; margin-bottom: 10px;">
+          <div>
+            <div class="request-name">{{ r.subject_type }} #{{ r.subject_id }} — {{ r.reason }}</div>
+            <div class="request-meta">reported by @{{ r.reporter_username }} · {{ r.created_at }}</div>
+          </div>
+          <span class="tag">{{ r.status }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state card" style="margin-top: 24px;">
+      <h3>Nothing to review.</h3>
+      <p>No reports match this filter right now.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

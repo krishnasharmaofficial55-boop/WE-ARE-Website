@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section">
+  <h1 class="section-heading" style="font-size: 1.8rem;">Admin</h1>
+  {% include "admin/_nav.html" %}
+
+  <div class="stat-grid">
+    <div class="card stat-card"><div class="stat-value">{{ stats.total_users }}</div><div class="stat-label">Total users</div></div>
+    <div class="card stat-card"><div class="stat-value">{{ stats.active_users }}</div><div class="stat-label">Active users</div></div>
+    <div class="card stat-card"><div class="stat-value">{{ stats.new_today }}</div><div class="stat-label">New today</div></div>
+    <div class="card stat-card"><div class="stat-value">{{ stats.total_posts }}</div><div class="stat-label">Total posts</div></div>
+    <div class="card stat-card"><div class="stat-value">{{ stats.total_connections }}</div><div class="stat-label">Connections</div></div>
+    <div class="card stat-card"><div class="stat-value">{{ stats.open_reports }}</div><div class="stat-label">Open reports</div></div>
+    <div class="card stat-card"><div class="stat-value">{{ stats.suspended_users }}</div><div class="stat-label">Suspended</div></div>
+  </div>
+</div>
+{% endblock %}

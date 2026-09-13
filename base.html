@@ -28,7 +28,15 @@
           <a href="{{ url_for('main.feed') }}" class="btn btn-ghost">Feed</a>
           <a href="{{ url_for('social.connections') }}" class="btn btn-ghost">Connections</a>
           <a href="{{ url_for('messaging.inbox') }}" class="btn btn-ghost">Messages</a>
+          <a href="{{ url_for('notifications.inbox') }}" class="btn btn-ghost nav-notif">
+            Notifications
+            {% if unread_notification_count %}<span class="notif-badge">{{ unread_notification_count }}</span>{% endif %}
+          </a>
           <a href="{{ url_for('main.profile', username=current_user['username']) }}" class="btn btn-primary">Profile</a>
+          <a href="{{ url_for('settings.profile_settings') }}" class="btn btn-ghost">Settings</a>
+          {% if viewer_is_admin %}
+            <a href="{{ url_for('admin.overview') }}" class="btn btn-ghost">Admin</a>
+          {% endif %}
           <form method="post" action="{{ url_for('auth.logout') }}" style="display:inline;">
             <input type="hidden" name="csrf_token" value="{{ nav_csrf_token }}">
             <button type="submit" class="btn btn-ghost">Sign out</button>
@@ -60,10 +68,10 @@
       <div>WE ARE. — Different places. Similar minds.</div>
       <div class="footer-links">
         <a href="{{ url_for('main.about') }}">About</a>
-        <a href="#">Community guidelines</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Contact</a>
+        <a href="{{ url_for('main.guidelines') }}">Community guidelines</a>
+        <a href="{{ url_for('main.privacy') }}">Privacy</a>
+        <a href="{{ url_for('main.terms') }}">Terms</a>
+        <a href="{{ url_for('main.contact') }}">Contact</a>
       </div>
     </div>
   </footer>

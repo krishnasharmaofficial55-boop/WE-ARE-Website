@@ -4,9 +4,64 @@
   <h1 class="section-heading" style="font-size: 2rem;">Find your kind of people.</h1>
   <p style="color: var(--text-secondary); margin-top: 10px; max-width: 50ch;">Filter by interests, goals, character and what people are learning right now — not by follower counts.</p>
 
-  <div class="empty-state card" style="margin-top: 32px;">
-    <h3>No people here yet.</h3>
-    <p>Complete your interests in onboarding to start seeing people who share them.</p>
-  </div>
+  <form method="get" style="margin-top: 28px;">
+    <div class="chip-grid">
+      {% for interest in all_interests %}
+        <div class="chip">
+          <input type="checkbox" id="filter-{{ interest.name }}" name="interest" value="{{ interest.name }}"
+                 {{ 'checked' if interest.name in selected }} onchange="this.form.submit()">
+          <label for="filter-{{ interest.name }}">{{ interest.name }}</label>
+        </div>
+      {% endfor %}
+    </div>
+  </form>
+
+  {% if results %}
+    <div class="discover-grid">
+      {% for person in results %}
+        <div class="card discover-card">
+          <div class="post-avatar" style="width:56px;height:56px;"></div>
+          <a href="{{ url_for('main.profile', username=person.username) }}" class="profile-name" style="font-size:1.05rem; margin-top: 14px; display:block;">
+            {{ person.display_name }}
+          </a>
+          <div class="profile-handle">@{{ person.username }}</div>
+
+          {% if person.tags %}
+            <div class="tag-list" style="margin-top: 12px;">
+              {% for tag in person.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+            </div>
+          {% endif %}
+
+          {% if person.shared_count %}
+            <div class="request-meta" style="margin-top: 10px;">{{ person.shared_count }} shared interest{{ 's' if person.shared_count != 1 }}</div>
+          {% endif %}
+
+          <div class="profile-actions" style="margin-top: 16px;">
+            {% if person.connected %}
+              <a href="{{ url_for('messaging.thread', username=person.username) }}" class="btn btn-gradient">Message</a>
+            {% else %}
+              <form method="post" action="{{ url_for('social.send_connection_request', username=person.username) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-gradient">Connect</button>
+              </form>
+            {% endif %}
+            {% if person.following %}
+              <button class="btn btn-ghost" disabled>Following</button>
+            {% else %}
+              <form method="post" action="{{ url_for('social.follow', username=person.username) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-ghost">Follow</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state card" style="margin-top: 32px;">
+      <h3>No people here yet.</h3>
+      <p>{% if selected %}Try a different interest, or clear your filters.{% else %}Add some interests in onboarding to start seeing people who share them.{% endif %}</p>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}

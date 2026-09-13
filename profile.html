@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container profile-header">
-  <div class="profile-avatar"></div>
+  <div class="profile-avatar" {% if profile.avatar_url %}style="background-image: url('{{ url_for('static', filename=profile.avatar_url) }}'); background-size: cover; background-position: center;"{% endif %}></div>
   <div class="profile-name">{{ profile.display_name if profile.show_real_name else profile.username }}</div>
   <div class="profile-handle">@{{ profile.username }}</div>
+
+  {% if current_user and current_user.username == profile.username %}
+    <a href="{{ url_for('settings.profile_settings') }}" class="btn btn-ghost" style="margin-top: 16px; display: inline-block;">Edit profile</a>
+  {% endif %}
 
   {% if relationship %}
     <div class="profile-actions">

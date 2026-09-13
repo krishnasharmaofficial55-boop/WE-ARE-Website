@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section legal-page">
+  <h1 class="section-heading" style="font-size: 2.2rem;">Terms of Service</h1>
+  <p class="legal-intro">By creating an account on WE ARE., you're agreeing to these terms. Read them alongside our <a href="{{ url_for('main.guidelines') }}">Community Guidelines</a> and <a href="{{ url_for('main.privacy') }}">Privacy Policy</a>, which these terms incorporate.</p>
+
+  <h2>Who can use WE ARE.</h2>
+  <p>You must meet our minimum age requirement to create an account, and you must provide an accurate date of birth. You're responsible for keeping your login credentials secure and for what happens under your account.</p>
+
+  <h2>Your content</h2>
+  <p>You own what you post. By posting it, you give us the license we need to display, distribute, and store it as part of operating the service — nothing more than that. You're responsible for having the rights to anything you post, and for making sure it complies with our Community Guidelines.</p>
+
+  <h2>What you agree not to do</h2>
+  <ul>
+    <li>Violate our Community Guidelines or any applicable law.</li>
+    <li>Attempt to access another person's account, or circumvent our security measures.</li>
+    <li>Scrape, harvest, or bulk-collect data from the platform.</li>
+    <li>Use the platform to distribute malware, spam, or deceptive content.</li>
+    <li>Misrepresent your age or identity in a way designed to harm someone else.</li>
+  </ul>
+
+  <h2>Moderation and enforcement</h2>
+  <p>We can remove content, and warn, suspend, or ban accounts that violate these terms or our Community Guidelines. We try to be fair and proportionate, and we keep a record of moderation actions taken. Serious or repeated violations — especially anything endangering a minor — can result in immediate, permanent removal without prior warning.</p>
+
+  <h2>No warranty</h2>
+  <p>WE ARE. is provided as-is. We work to keep it reliable and safe, but we don't guarantee it will be uninterrupted, error-free, or perfectly secure. Don't rely on it for anything where that would put you at serious risk.</p>
+
+  <h2>Limitation of liability</h2>
+  <p>To the extent permitted by law, WE ARE. isn't liable for indirect, incidental, or consequential damages arising from your use of the platform. This isn't intended to waive protections that can't legally be waived where you live.</p>
+
+  <h2>Ending your account</h2>
+  <p>You can stop using WE ARE. at any time and request account deletion through our <a href="{{ url_for('main.contact') }}">Contact</a> page. We can suspend or terminate accounts that violate these terms, following the process described in our Community Guidelines.</p>
+
+  <h2>Changes to these terms</h2>
+  <p>We may update these terms as the product evolves. Material changes will be communicated, not made silently.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about these terms — reach out through our <a href="{{ url_for('main.contact') }}">Contact</a> page.</p>
+
+  <p class="legal-disclaimer">This is a template, not a substitute for legal review by a licensed attorney in your jurisdiction before launch.</p>
+</div>
+{% endblock %}

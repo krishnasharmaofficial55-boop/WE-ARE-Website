@@ -1,0 +1,57 @@
+<div class="card post">
+  <div class="post-head">
+    <a href="{{ url_for('main.profile', username=post.username) }}" class="post-avatar" style="display:block;"></a>
+    <div>
+      <a href="{{ url_for('main.profile', username=post.username) }}" class="post-name">
+        {{ post.display_name if post.show_real_name else post.username }}
+      </a>
+      <div class="post-meta">@{{ post.username }} · {{ post.created_at }}</div>
+    </div>
+  </div>
+
+  <a href="{{ url_for('posts.view', post_id=post.id) }}" style="display:block;">
+    {% if post.body %}<div class="post-body">{{ post.body }}</div>{% endif %}
+    {% if post.link_url %}<div class="post-link">{{ post.link_url }}</div>{% endif %}
+    {% for m in post.media %}
+      <img src="{{ url_for('static', filename=m.url) }}" alt="" class="post-image">
+    {% endfor %}
+  </a>
+
+  <div class="post-actions">
+    <form method="post" action="{{ url_for('posts.toggle_like', post_id=post.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button type="submit" class="post-action-btn {{ 'active' if post.viewer_liked }}">
+        Like{% if post.like_count %} · {{ post.like_count }}{% endif %}
+      </button>
+    </form>
+
+    <a href="{{ url_for('posts.view', post_id=post.id) }}" class="post-action-btn">
+      Comment{% if post.comment_count %} · {{ post.comment_count }}{% endif %}
+    </a>
+
+    <form method="post" action="{{ url_for('posts.toggle_repost', post_id=post.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button type="submit" class="post-action-btn {{ 'active' if post.viewer_reposted }}">
+        Repost{% if post.repost_count %} · {{ post.repost_count }}{% endif %}
+      </button>
+    </form>
+
+    <form method="post" action="{{ url_for('posts.toggle_save', post_id=post.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button type="submit" class="post-action-btn {{ 'active' if post.viewer_saved }}">Save</button>
+    </form>
+
+    {% if post.is_author %}
+      <form method="post" action="{{ url_for('posts.delete', post_id=post.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="post-action-btn">Delete</button>
+      </form>
+    {% else %}
+      <form method="post" action="{{ url_for('posts.report', post_id=post.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="reason" value="reported from feed">
+        <button type="submit" class="post-action-btn">Report</button>
+      </form>
+    {% endif %}
+  </div>
+</div>

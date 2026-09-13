@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section" style="max-width: 560px;">
+  <h1 class="section-heading" style="font-size: 2rem;">Contact</h1>
+
+  {% if sent %}
+    <div class="card" style="padding: 32px; margin-top: 20px; text-align: center;">
+      <h3 style="margin-bottom: 8px;">Thanks — we've got it.</h3>
+      <p style="color: var(--text-secondary);">We read every message. If it needs a reply, we'll get back to you at the email you gave us.</p>
+    </div>
+  {% else %}
+    <p style="color: var(--text-secondary); margin-top: 10px;">Questions, feedback, a safety concern, or something about your account — this reaches our team directly.</p>
+
+    <div class="card" style="padding: 28px; margin-top: 24px;">
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required
+                    style="width:100%; min-height: 140px; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border); font-family: inherit; font-size: 0.95rem; background: var(--surface); color: var(--text); resize: vertical;"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-gradient btn-block">Send</button>
+      </form>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 16px;">
+      If this is about a safety concern involving a minor, please say so at the top of your message — those are treated as our highest priority.
+    </p>
+  {% endif %}
+</div>
+{% endblock %}

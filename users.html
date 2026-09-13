@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section">
+  <h1 class="section-heading" style="font-size: 1.8rem;">Users</h1>
+  {% include "admin/_nav.html" %}
+
+  <form method="get" style="margin-top: 20px; max-width: 320px;">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search username or email"
+           style="width:100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text);">
+  </form>
+
+  <div style="margin-top: 20px;">
+    {% for u in users %}
+      <div class="card request-row">
+        <div>
+          <div class="request-name">@{{ u.username }} <span class="tag" style="margin-left:6px;">{{ 'active' if u.is_active else 'suspended' }}</span></div>
+          <div class="request-meta">{{ u.email }} · joined {{ u.created_at }}</div>
+        </div>
+        <div class="request-actions">
+          {% if u.is_active %}
+            <form method="post" action="{{ url_for('admin.suspend_user', user_id=u.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+              <button type="submit" class="btn btn-danger">Suspend</button>
+            </form>
+          {% else %}
+            <form method="post" action="{{ url_for('admin.reinstate_user', user_id=u.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+              <button type="submit" class="btn btn-gradient">Reinstate</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <p style="color: var(--text-secondary);">No users match.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

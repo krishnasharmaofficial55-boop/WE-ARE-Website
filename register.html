@@ -44,6 +44,12 @@
       <button type="submit" class="btn btn-gradient btn-block">Create account</button>
     </form>
 
+    <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 16px; text-align: center;">
+      By joining, you agree to our <a href="{{ url_for('main.terms') }}" style="color: var(--text-secondary);">Terms</a>,
+      <a href="{{ url_for('main.privacy') }}" style="color: var(--text-secondary);">Privacy Policy</a>, and
+      <a href="{{ url_for('main.guidelines') }}" style="color: var(--text-secondary);">Community Guidelines</a>.
+    </p>
+
     <div class="form-footer">
       Already on WE ARE.? <a href="{{ url_for('auth.login') }}">Sign in</a>
     </div>

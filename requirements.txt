@@ -3,6 +3,8 @@
 Flask>=3.0
 itsdangerous>=2.1
 Werkzeug>=3.0
+Pillow>=10.0
+gunicorn>=21.2
 
 # Recommended upgrade path once you have network access — see README.md
 # "Architecture note: no ORM, no Postgres — yet":

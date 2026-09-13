@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container section" style="max-width: 560px;">
+  <h1 class="section-heading" style="font-size: 1.8rem;">Settings</h1>
+
+  <div class="card" style="padding: 28px; margin-top: 20px;">
+    <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px;">Profile photo</h3>
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <div class="profile-avatar" style="width:64px;height:64px; {% if profile.avatar_url %}background-image: url('{{ url_for('static', filename=profile.avatar_url) }}'); background-size: cover; background-position: center;{% endif %}"></div>
+      <form method="post" action="{{ url_for('settings.profile_settings') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" onchange="this.form.submit()">
+      </form>
+    </div>
+  </div>
+
+  <div class="card" style="padding: 28px; margin-top: 16px;">
+    <form method="post" action="{{ url_for('settings.profile_settings') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <div class="field">
+        <label>
+          <input type="checkbox" name="show_real_name" {{ 'checked' if user.show_real_name }} style="width:auto; margin-right:8px;">
+          Show my display name publicly (otherwise only your username shows)
+        </label>
+      </div>
+
+      {% for key, label, max_len in fields %}
+        <div class="field">
+          <label for="{{ key }}">{{ label }}</label>
+          <textarea name="{{ key }}" id="{{ key }}" maxlength="{{ max_len }}"
+                    style="width:100%; min-height: 56px; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border); font-family: inherit; font-size: 0.95rem; background: var(--surface); color: var(--text); resize: vertical;">{{ profile[key] or '' }}</textarea>
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-gradient">Save changes</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
